@@ -1,0 +1,76 @@
+name: 🏛️ El Gran Tribunal de Magia (Autoevaluación Angular)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# Permisos necesarios para que el Tribunal Mágico pueda crear, comentar y cerrar Issues
+permissions:
+  issues: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  tribunal_veredicto:
+    name: 🔮 Juicio de Hechizos y Autoevaluación
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📜 Desenrollar Pergamino del Repositorio (Checkout)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🛡️ Inspección de Integridad Sagrada (Verificar que *.spec.ts no fueron alterados)
+        run: |
+          echo "🔍 Inspeccionando si los archivos sagrados de prueba fueron profanados..."
+          
+          # Si es un Pull Request, comparar contra la rama base
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin ${{ github.base_ref }} --depth=1
+            MODIFIED_SPECS=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '**/*.spec.ts')
+            if [ -n "$MODIFIED_SPECS" ]; then
+              echo "::error::☠️ MALDICIÓN DETECTADA: Se han modificado o alterado archivos sagrados de prueba (*.spec.ts):"
+              echo "$MODIFIED_SPECS"
+              echo "REGLA DE ORO VIOLADA: Alterar las pruebas del Tribunal otorga una calificación de 0.0 automática."
+              exit 1
+            fi
+            echo "✔ Archivos de prueba limpios y sin profanaciones."
+          else
+            echo "✔ Push validado."
+          fi
+
+      - name: 🧙‍♂️ Preparar Entorno Mágico de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: 📦 Instalar Ingredientes Mágicos (npm ci)
+        run: npm ci
+
+      - name: 🧪 Ejecutar Pruebas Mágicas del Tribunal
+        # Ejecutamos las pruebas y capturamos el reporte en test-results.log
+        # Usamos || true para no abortar el flujo y permitir que el gestor de issues
+        # analice el veredicto, comente y abra el siguiente reto.
+        run: |
+          npm run test:ci > test-results.log 2>&1 || true
+          cat test-results.log
+
+      - name: ⚖️ El Veredicto del Tribunal (Gestor Automático de Issues y Calificación)
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./.github/scripts/tribunal.js')
+            await script({github, context})
+
+      - name: 📜 Notificación del Juicio
+        run: |
+          if grep -q "TOTAL:.*FAILED" test-results.log; then
+            echo "::warning::Hay pruebas pendientes en este push. Consulta los comentarios en tu Issue abierto para ver las pistas y tu puntuación actual."
+          else
+            echo "🎉 ¡Todos los encantamientos técnicos han sido validados exitosamente!"
+          fi

@@ -1,0 +1,116 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a routerLink="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Laboratorio 01</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge">SECCIÓN 1</div>
+    <h2>📜 El Pergamino Maestro: Anatomía del package.json</h2>
+    <p class="section-subtitle">
+      El libro de cabecera de todo proyecto Node/Angular. Aquí se declaran los ingredientes, las pociones instaladas y los comandos mágicos.
+    </p>
+  </div>
+
+  <div class="tabs-magic">
+    <button class="tab-btn" [class.active]="selectedTab === 'anatomy'" (click)="selectTab('anatomy')">
+      🔍 Anatomía del Pergamino
+    </button>
+    <button class="tab-btn" [class.active]="selectedTab === 'scripts'" (click)="selectTab('scripts')">
+      ⚡ Scripts Mágicos (Comandos)
+    </button>
+    <button class="tab-btn" [class.active]="selectedTab === 'dependencies'" (click)="selectTab('dependencies')">
+      🧪 Dependencies vs DevDependencies
+    </button>
+  </div>
+
+  @if (selectedTab === 'anatomy') {
+    <div class="tab-content">
+      <div class="callout-didactico">
+        <h4>💡 Nota para la Clase</h4>
+        <p>
+          En PHP o Spring Boot teníamos <span class="callout-code">composer.json</span> o <span class="callout-code">pom.xml</span>. En Angular, 
+          <strong>package.json</strong> cumple esa misma función: declara qué versión estamos usando y qué librerías necesita nuestro hechizo para funcionar.
+        </p>
+      </div>
+
+      <div class="anatomy-grid">
+        <div class="anatomy-box">
+          <h3>📦 Metadatos Generales</h3>
+          <p><strong>name:</strong> Identificador único del proyecto (ej. <span class="callout-code">angular-colegio-magico</span>).</p>
+          <p><strong>version:</strong> Versión actual de los encantamientos (semver, ej. <span class="callout-code">0.0.1</span>).</p>
+          <p><strong>private:</strong> Evita publicaciones accidentales al registro público de npm.</p>
+        </div>
+
+        <div class="anatomy-box">
+          <h3>🌲 La Regla de Oro del Bosque</h3>
+          <p>
+            La carpeta <span class="callout-code">node_modules/</span> es donde npm descarga físicamente el código de las dependencias. 
+            <strong>¡NUNCA se sube a Git!</strong> Pesa cientos de megabytes. Para revivirla en cualquier máquina solo corremos <span class="callout-code">npm install</span>.
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (selectedTab === 'scripts') {
+    <div class="tab-content">
+      <p class="helper-text">Haz clic en cada comando para probar la simulación de lo que ocurre tras bambalinas:</p>
+      <div class="scripts-list">
+        @for (s of scripts; track s.name) {
+          <div class="script-item" [class.selected]="activeScript === s.name" (click)="runSimulatedScript(s)">
+            <div class="script-meta">
+              <span class="script-badge">npm run {{ s.name }}</span>
+              <span class="script-cmd">{{ s.cmd }}</span>
+            </div>
+            <p class="script-desc">{{ s.desc }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="console-box">
+        <div class="console-header">🔮 Consola del Hechicero</div>
+        <pre class="console-magic">{{ scriptOutput }}</pre>
+      </div>
+    </div>
+  }
+
+  @if (selectedTab === 'dependencies') {
+    <div class="tab-content">
+      <div class="dep-comparison">
+        <div class="dep-col">
+          <h3>🚀 dependencies (En Producción)</h3>
+          <p class="dep-note">Pociones indispensables para que el usuario final interactúe con el colegio en su navegador.</p>
+          <ul class="dep-list">
+            @for (d of dependencies; track d.name) {
+              @if (d.type === 'dep') {
+                <li>
+                  <span class="callout-code">{{ d.name }}</span>
+                  <span class="dep-purpose">{{ d.purpose }}</span>
+                </li>
+              }
+            }
+          </ul>
+        </div>
+
+        <div class="dep-col">
+          <h3>🛠️ devDependencies (Taller de Construcción)</h3>
+          <p class="dep-note">Herramientas que solo necesita el artesano/desarrollador durante la creación y pruebas.</p>
+          <ul class="dep-list">
+            @for (d of dependencies; track d.name) {
+              @if (d.type === 'dev') {
+                <li>
+                  <span class="callout-code">{{ d.name }}</span>
+                  <span class="dep-purpose">{{ d.purpose }}</span>
+                </li>
+              }
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+</section>
+</div>

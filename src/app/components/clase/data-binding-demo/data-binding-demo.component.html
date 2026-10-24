@@ -1,0 +1,139 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a routerLink="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Laboratorio 04</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge">SECCIÓN 4</div>
+    <h2>🪞 El Vínculo Mágico: Data Binding y [(ngModel)]</h2>
+    <p class="section-subtitle">
+      La conexión viva entre la lógica de TypeScript (el cerebro) y el HTML del navegador (los sentidos del usuario).
+    </p>
+  </div>
+
+  <div class="callout-didactico">
+    <h4>💡 Los 4 Tipos de Data Binding en Angular</h4>
+    <p>
+      1. <strong>Interpolación <span class="callout-code">{{ '{{ nombreAprendiz }}' }}</span>:</strong> TypeScript ➔ HTML (Muestra texto en pantalla).<br>
+      2. <strong>Property Binding <span class="callout-code">[disabled]="condicion"</span>:</strong> TypeScript ➔ HTML (Controla propiedades del elemento HTML).<br>
+      3. <strong>Event Binding <span class="callout-code">(click)="hechizo()"</span>:</strong> HTML ➔ TypeScript (Escucha acciones del usuario).<br>
+      4. <strong>Two-Way Binding <span class="callout-code">[(ngModel)]="variable"</span>:</strong> ¡Bidireccional! Conocido como <em>"Banana in a box"</em> <span class="callout-code">[()]</span>. Cualquier cambio en el input actualiza TypeScript y viceversa inmediatamente. Requiere importar <span class="callout-code">FormsModule</span>.
+    </p>
+  </div>
+
+  <div class="binding-layout">
+    <!-- Formulario con [(ngModel)] -->
+    <div class="form-container">
+      <h3>📜 Pergamino de Matrícula Mágica</h3>
+      <p class="form-desc">Escribe en los campos para ver cómo el carné mágico se actualiza en tiempo real letra por letra:</p>
+
+      <div class="form-group">
+        <label>Nombre del Aprendiz:</label>
+        <input 
+          type="text" 
+          class="input-magic" 
+          [(ngModel)]="nombreAprendiz" 
+          placeholder="Ej: Harry Potter"
+        />
+        <span class="binding-tag">[(ngModel)]="nombreAprendiz"</span>
+      </div>
+
+      <div class="form-group">
+        <label>Núcleo de la Varita:</label>
+        <select class="input-magic" [(ngModel)]="nucleoVarita">
+          <option value="Pluma de Fénix">Pluma de Fénix (Poderoso y versátil)</option>
+          <option value="Fibra de corazón de dragón">Fibra de corazón de dragón (Gran poder flamígero)</option>
+          <option value="Pelo de Unicornio">Pelo de Unicornio (Magia pura y consistente)</option>
+          <option value="Pelo de Thestral">Pelo de Thestral (Solo para magos capaces)</option>
+        </select>
+        <span class="binding-tag">[(ngModel)]="nucleoVarita"</span>
+      </div>
+
+      <div class="form-group">
+        <label>Mascota Acompañante:</label>
+        <input 
+          type="text" 
+          class="input-magic" 
+          [(ngModel)]="mascota" 
+          placeholder="Ej: Lechuza Hedwig"
+        />
+        <span class="binding-tag">[(ngModel)]="mascota"</span>
+      </div>
+
+      <!-- Property Binding [disabled] y Event Binding (click) -->
+      <div class="action-submit">
+        <button 
+          class="btn-magic" 
+          [disabled]="!nombreAprendiz || nombreAprendiz.trim().length < 3" 
+          (click)="matricularAprendiz()"
+        >
+          🪄 Matricular Aprendiz en Hogwarts
+        </button>
+        <span class="binding-tag">[disabled]="!esNombreValido()" (click)="matricular()"</span>
+      </div>
+
+      @if (mensajeEncantamiento) {
+        <div class="success-alert">
+          {{ mensajeEncantamiento }}
+        </div>
+      }
+    </div>
+
+    <!-- Carné Mágico en Tiempo Real (Interpolación) -->
+    <div class="id-card-container">
+      <h3>🪪 Carné Oficial de Estudiante (Live Preview)</h3>
+      <div class="id-card">
+        <div class="id-card-header">
+          <span class="crest">🏰</span>
+          <div>
+            <h4>COLEGIO HOGWARTS</h4>
+            <span class="crest-sub">Credencial de Aprendiz</span>
+          </div>
+        </div>
+
+        <div class="id-card-body">
+          <div class="avatar-ring">🧙‍♀️</div>
+          <div class="id-fields">
+            <div class="field">
+              <span class="label">Aprendiz:</span>
+              <span class="value">{{ nombreAprendiz || '--- Sin Bautizar ---' }}</span>
+            </div>
+            <div class="field">
+              <span class="label">Varita:</span>
+              <span class="value">{{ nucleoVarita }}</span>
+            </div>
+            <div class="field">
+              <span class="label">Mascota:</span>
+              <span class="value">{{ mascota || 'Ninguna' }}</span>
+            </div>
+            <div class="field">
+              <span class="label">Estado:</span>
+              <span class="value status-ok">En regla con el Ministerio</span>
+            </div>
+          </div>
+        </div>
+        <div class="id-card-footer">
+          <span>Firmado por Minerva McGonagall</span>
+          <span class="hologram">✨ HOLOGRÁFICO</span>
+        </div>
+      </div>
+
+      <!-- Lista de aprendices -->
+      <div class="roster-box">
+        <h4>📚 Libro de Matrícula Reciente ({{ aprendices.length }})</h4>
+        <div class="roster-list">
+          @for (ap of aprendices; track ap.id) {
+            <div class="roster-item">
+              <strong>{{ ap.nombre }}</strong>
+              <span>{{ ap.varita }} | {{ ap.mascota }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>

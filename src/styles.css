@@ -1,0 +1,339 @@
+/* ============================================================
+   COLEGIO MÁGICO - SISTEMA DE ESTILOS GLOBALES (DARK FANTASY)
+   ============================================================ */
+
+:root {
+  /* Paleta Mágica Principal */
+  --bg-deep: #080b11;
+  --bg-surface: #0f172a;
+  --bg-card: rgba(17, 24, 39, 0.88);
+  --bg-card-hover: rgba(30, 41, 59, 0.92);
+  --bg-glass: rgba(15, 23, 42, 0.75);
+
+  /* Acentos Mágicos */
+  --gold-primary: #d4af37;
+  --gold-glow: rgba(212, 175, 55, 0.35);
+  --gold-light: #fef08a;
+  --gold-dark: #854d0e;
+
+  /* Casas de Magia */
+  --gryffindor-red: #b91c1c;
+  --slytherin-green: #047857;
+  --ravenclaw-blue: #1d4ed8;
+  --hufflepuff-yellow: #ca8a04;
+
+  /* Tipos de Magia */
+  --magic-luz: #38bdf8;
+  --magic-curacion: #10b981;
+  --magic-transmutacion: #a855f7;
+  --magic-prohibida: #ef4444;
+
+  /* Textos */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-gold: #fde047;
+
+  /* Bordes & Sombras */
+  --border-gold: rgba(212, 175, 55, 0.25);
+  --border-subtle: rgba(148, 163, 184, 0.12);
+  --shadow-magic: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.25);
+
+  /* Fuentes */
+  --font-magic: 'Cinzel', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-code: 'Fira Code', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  background-image: 
+    radial-gradient(ellipse at 20% 10%, rgba(147, 51, 234, 0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, var(--bg-deep) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Tipografía Mágica */
+h1, h2, h3, h4, .font-magic {
+  font-family: var(--font-magic);
+  letter-spacing: 0.5px;
+}
+
+h1 {
+  font-weight: 800;
+  background: linear-gradient(135deg, #fef08a 0%, #d4af37 60%, #996515 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+}
+
+h2 {
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+/* Botones Mágicos */
+.btn-magic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  border: 1px solid var(--border-gold);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%);
+  color: var(--gold-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-magic:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.35) 0%, rgba(212, 175, 55, 0.15) 100%);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 20px var(--gold-glow);
+  transform: translateY(-2px);
+}
+
+.btn-magic:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-magic:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: none;
+}
+
+.btn-danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.08) 100%);
+  color: #fca5a5;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(239, 68, 68, 0.2) 100%);
+  border-color: #f87171;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-secondary {
+  border-color: var(--border-subtle);
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(51, 65, 85, 0.8);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+/* Tarjetas Mágicas */
+.card-magic {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-magic);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-magic:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: var(--shadow-magic), 0 0 25px rgba(212, 175, 55, 0.15);
+}
+
+/* Badges Mágicos */
+.badge-magic {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border-gold);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold-light);
+}
+
+.badge-curacion {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+}
+
+.badge-transmutacion {
+  border-color: rgba(168, 85, 247, 0.3);
+  background: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+}
+
+.badge-prohibida {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+/* Callouts Didácticos (Para que el profesor explique en vivo) */
+.callout-didactico {
+  background: rgba(15, 23, 42, 0.85);
+  border-left: 4px solid var(--gold-primary);
+  border-radius: 0 10px 10px 0;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  position: relative;
+}
+
+.callout-didactico h4 {
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+.callout-code {
+  font-family: var(--font-code);
+  background: #05070c;
+  color: #38bdf8;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+/* Consola de Logs Mágica */
+.console-magic {
+  background: #030712;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  font-family: var(--font-code);
+  font-size: 0.82rem;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.console-magic .log-item {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Formularios Mágicos */
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text-secondary);
+}
+
+.input-magic {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-magic:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 12px var(--gold-glow);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+/* Scrollbar Personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.6);
+}
+
+/* Layout de Páginas Individuales */
+.page-container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem 1.5rem;
+}
+
+.page-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.back-link {
+  color: var(--gold-light);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+.page-breadcrumb .sep {
+  color: var(--text-muted);
+}
+
+.page-breadcrumb .current {
+  color: var(--text-muted);
+  font-family: var(--font-magic);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+

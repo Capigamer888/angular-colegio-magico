@@ -1,0 +1,69 @@
+<header class="navbar-magic">
+  <div class="nav-container">
+    <a routerLink="/" class="nav-brand" (click)="cerrarModulos()">
+      <span class="brand-icon">🧙‍♂️</span>
+      <div class="brand-text">
+        <span class="brand-title">COLEGIO MÁGICO</span>
+        <span class="brand-subtitle">Academia Angular</span>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item" (click)="cerrarModulos()">
+        <span>🏰</span> Inicio
+      </a>
+
+      <!-- Dropdown de Secciones de Repaso -->
+      <div class="dropdown-wrapper">
+        <button class="nav-item dropdown-btn" (click)="toggleModulos()">
+          <span>📖</span> Secciones de Clase <span class="arrow-icon">{{ menuModulosAbierto ? '▲' : '▼' }}</span>
+        </button>
+
+        @if (menuModulosAbierto) {
+          <div class="dropdown-menu" (mouseleave)="cerrarModulos()">
+            <a routerLink="/seccion/1-package-json" routerLinkActive="active" class="dropdown-item" (click)="cerrarModulos()">
+              <span class="item-icon">📜</span>
+              <div>
+                <strong>01. package.json</strong>
+                <small>Scripts y dependencias</small>
+              </div>
+            </a>
+            <a routerLink="/seccion/2-ciclos-vida" routerLinkActive="active" class="dropdown-item" (click)="cerrarModulos()">
+              <span class="item-icon">⏳</span>
+              <div>
+                <strong>02. Ciclos de Vida</strong>
+                <small>ngOnInit, ngOnChanges, ngOnDestroy</small>
+              </div>
+            </a>
+            <a routerLink="/seccion/3-directivas" routerLinkActive="active" class="dropdown-item" (click)="cerrarModulos()">
+              <span class="item-icon">🪄</span>
+              <div>
+                <strong>03. Directivas</strong>
+                <small>{{ '@if' }}, {{ '@for' }}, [ngClass]</small>
+              </div>
+            </a>
+            <a routerLink="/seccion/4-data-binding" routerLinkActive="active" class="dropdown-item" (click)="cerrarModulos()">
+              <span class="item-icon">🪞</span>
+              <div>
+                <strong>04. Data Binding</strong>
+                <small>[(ngModel)] y eventos</small>
+              </div>
+            </a>
+          </div>
+        }
+      </div>
+
+      <a routerLink="/reto-0" routerLinkActive="active" class="nav-item badge-teacher" (click)="cerrarModulos()">
+        <span>🎓</span> Reto 0 (Profesor)
+      </a>
+
+      <a routerLink="/caldero" routerLinkActive="active" class="nav-item badge-student" (click)="cerrarModulos()">
+        <span>⚗️</span> Retos 1-6 (Caldero)
+      </a>
+
+      <a routerLink="/artefacto-creativo" routerLinkActive="active" class="nav-item badge-creative" (click)="cerrarModulos()">
+        <span>🎨</span> Reto 7 (Creativo)
+      </a>
+    </nav>
+  </div>
+</header>

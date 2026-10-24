@@ -1,0 +1,334 @@
+.section-card {
+  margin-bottom: 2rem;
+}
+
+.student-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: #d8b4fe;
+  border-color: #a855f7;
+}
+
+.caldero-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 0.9rem 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-metric {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.metric-icon {
+  font-size: 1.6rem;
+}
+
+.metric-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.metric-val {
+  font-size: 1rem;
+  color: var(--gold-light);
+}
+
+.giratiempo-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.giratiempo-title {
+  font-family: var(--font-magic);
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  margin-right: 0.3rem;
+}
+
+.caldero-workspace {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+}
+
+.form-caldero-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.25rem;
+  height: fit-content;
+}
+
+.form-caldero-box h3 {
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  margin-bottom: 0.3rem;
+}
+
+.form-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.1rem;
+}
+
+.text-area {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.form-group.half {
+  flex: 1;
+}
+
+.input-range {
+  width: 100%;
+  accent-color: var(--gold-primary);
+  margin-top: 0.4rem;
+}
+
+.btn-submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.lista-caldero-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtros-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.input-search {
+  flex: 2;
+  min-width: 180px;
+}
+
+.select-tipo {
+  flex: 1;
+  min-width: 140px;
+}
+
+.checkbox-peligro {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-peligro input {
+  accent-color: #ef4444;
+}
+
+.btn-sort {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.pociones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.1rem;
+}
+
+.pocion-card {
+  background: rgba(17, 24, 39, 0.85);
+  border-radius: 12px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.pocion-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.pocion-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.frasco-icon {
+  font-size: 1.8rem;
+}
+
+.pocion-nombre {
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.btn-eliminar-pocion {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.btn-eliminar-pocion:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.pocion-desc {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  flex: 1;
+  margin-bottom: 0.75rem;
+}
+
+.toxic-warning {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  margin-bottom: 0.75rem;
+  animation: pulseWarning 2s infinite ease-in-out;
+}
+
+.pocion-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.empty-caldero {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px dashed var(--border-gold);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.empty-caldero h4 {
+  font-family: var(--font-magic);
+  color: var(--gold-light);
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-instructions {
+  margin-top: 1.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  display: inline-block;
+  max-width: 650px;
+}
+
+.empty-instructions p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.empty-instructions p:last-child {
+  margin-bottom: 0;
+}
+
+.empty-instructions code {
+  font-family: var(--font-code);
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Bordes de [ngClass] según tipo de magia */
+.borde-magia-curacion {
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.borde-magia-curacion:hover {
+  border-color: #10b981;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.2);
+}
+
+.borde-magia-transmutacion {
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+.borde-magia-transmutacion:hover {
+  border-color: #a855f7;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.2);
+}
+
+.borde-magia-luz {
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+.borde-magia-luz:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+}
+
+.borde-magia-prohibida {
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(17, 24, 39, 0.95) 100%);
+}
+.borde-magia-prohibida:hover {
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+@keyframes pulseWarning {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 960px) {
+  .caldero-workspace {
+    grid-template-columns: 1fr;
+  }
+}

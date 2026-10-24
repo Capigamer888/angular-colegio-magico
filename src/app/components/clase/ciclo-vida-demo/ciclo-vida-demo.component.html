@@ -1,0 +1,93 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a routerLink="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Laboratorio 02</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge">SECCIÓN 2</div>
+    <h2>⏳ El Despertar y Desvanecimiento: Ciclos de Vida (Lifecycle Hooks)</h2>
+    <p class="section-subtitle">
+      Un componente en Angular es un ser viviente: nace (ngOnInit), muta con nuevas pociones (ngOnChanges) y se desvanece (ngOnDestroy).
+    </p>
+  </div>
+
+  <div class="callout-didactico">
+    <h4>💡 Claves Pedagógicas para la Clase</h4>
+    <p>
+      • <strong>constructor():</strong> Instancia básica de la clase en memoria. No hagas llamadas HTTP ni configures timers pesados aquí.<br>
+      • <strong>ngOnInit():</strong> Momento sagrado para inicializar datos, llamar APIs o arrancar procesos.<br>
+      • <strong>ngOnChanges():</strong> Se dispara automáticamente cuando una propiedad con <span class="callout-code">{{ '@Input()' }}</span> cambia de valor desde el componente padre.<br>
+      • <strong>ngOnDestroy():</strong> ¡El exorcismo de memoria! Aquí se cancelan suscripciones, WebSockets y <span class="callout-code">clearInterval()</span> para no dejar procesos zombis en el navegador.
+    </p>
+  </div>
+
+  <div class="demo-playground">
+    <div class="controls-panel">
+      <h3>🎛️ Panel de Invocación</h3>
+      <p class="panel-desc">Interactúa con los botones para ver los eventos del ciclo de vida en la consola mágica:</p>
+
+      <div class="btn-group">
+        <button 
+          class="btn-magic" 
+          [class.btn-danger]="estaInvocado" 
+          (click)="invocarODesvanecer()"
+        >
+          @if (estaInvocado) {
+            <span>💀 Desvanecer Fénix (ngOnDestroy)</span>
+          } @else {
+            <span>✨ Invocar Fénix (ngOnInit)</span>
+          }
+        </button>
+
+        <button 
+          class="btn-magic btn-secondary" 
+          [disabled]="!estaInvocado" 
+          (click)="cambiarPoder(-15)"
+        >
+          ❄️ Reducir Poder (-15%)
+        </button>
+
+        <button 
+          class="btn-magic" 
+          [disabled]="!estaInvocado" 
+          (click)="cambiarPoder(15)"
+        >
+          🔥 Aumentar Poder (+15%)
+        </button>
+      </div>
+
+      <!-- Invocación condicional de la Criatura -->
+      @if (estaInvocado) {
+        <app-fenix-criatura [poder]="nivelPoder"></app-fenix-criatura>
+      } @else {
+        <div class="cenizas-box">
+          <span class="cenizas-icon">💨 🪶</span>
+          <p>El Fénix está desvanecido. Sus cenizas reposan en memoria esperando ser convocado de nuevo.</p>
+        </div>
+      }
+    </div>
+
+    <div class="console-panel">
+      <div class="console-top">
+        <span class="console-title">📜 Registro en Vivo de Hooks Mágicos</span>
+        <button class="btn-clear" (click)="limpiarLogs()">Limpiar</button>
+      </div>
+      <div class="console-magic">
+        @if (logs.length === 0) {
+          <p class="console-empty">No hay eventos aún. Presiona los botones del panel...</p>
+        }
+        @for (log of logs; track $index) {
+          <div class="log-item" [ngClass]="'log-' + log.tipo">
+            <span class="log-time">{{ log.hora }}</span>
+            <span class="log-hook">[{{ log.hook }}]</span>
+            <span class="log-msg">{{ log.mensaje }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+</div>

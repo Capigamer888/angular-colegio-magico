@@ -1,0 +1,232 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a href="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Retos 1 al 6 • El Caldero</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge student-badge">ESPACIO DE EVALUACIÓN • RETOS 1 AL 6 (50%)</div>
+    <h2>⚗️ El Caldero de Pociones del Colegio Mágico</h2>
+    <p class="section-subtitle">
+      Aquí pondrás a prueba tu maestría en Angular. Completa los retos en 
+      <span class="callout-code">src/app/components/retos/caldero/caldero.component.ts</span> para que el Tribunal apruebe tus pruebas.
+    </p>
+  </div>
+
+  <!-- Instrucciones de los Retos -->
+  <div class="callout-didactico">
+    <h4>📋 Guía de Retos del Estudiante</h4>
+    <p>
+      • <strong>Reto 1:</strong> Implementa <span class="callout-code">OnInit</span> y carga 3 pociones iniciales en <span class="callout-code">ngOnInit()</span>.<br>
+      • <strong>Reto 2:</strong> Renderiza las pociones con <span class="callout-code">{{ '@for' }}</span>, muestra la alerta de toxicidad con <span class="callout-code">{{ '@if' }} (peligro mayor a 7)</span> y aplica <span class="callout-code">[ngClass]</span> al frasco.<br>
+      • <strong>Reto 3:</strong> Enlaza el formulario con <span class="callout-code">[(ngModel)]</span> y deshabilita el botón con <span class="callout-code">[disabled]</span> si no cumple las reglas.<br>
+      • <strong>Reto 4:</strong> En <span class="callout-code">ngOnDestroy()</span>, destruye el temporizador con <span class="callout-code">clearInterval()</span>.<br>
+      • <strong>Reto 5 (IA Challenge):</strong> Completa los filtros combinados y el cálculo de estabilidad del caldero.<br>
+      • <strong>Reto 6 (IA Challenge):</strong> Maneja el historial del Giratiempo con Undo/Redo inmutable.
+    </p>
+  </div>
+
+  <!-- Barra de Estado del Caldero y Giratiempo -->
+  <div class="caldero-status-bar">
+    <div class="status-metric">
+      <span class="metric-icon">🔥</span>
+      <div>
+        <span class="metric-label">Tiempo de Fuego:</span>
+        <strong class="metric-val">{{ segundosCoccion }}s</strong>
+      </div>
+    </div>
+
+    <div class="status-metric">
+      <span class="metric-icon">⚠️</span>
+      <div>
+        <span class="metric-label">Estabilidad del Caldero:</span>
+        <span 
+          class="badge-magic" 
+          [class.badge-curacion]="calcularEstabilidadCaldero() === 'SEGURO'"
+          [class.badge-transmutacion]="calcularEstabilidadCaldero() === 'INESTABLE'"
+          [class.badge-prohibida]="calcularEstabilidadCaldero() === 'CRÍTICO'"
+        >
+          {{ calcularEstabilidadCaldero() }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Giratiempo (Reto 6) -->
+    <div class="giratiempo-controls">
+      <span class="giratiempo-title">⏳ Giratiempo:</span>
+      <button 
+        class="btn-magic btn-secondary" 
+        [disabled]="!puedeDeshacer()" 
+        (click)="giratiempoDeshacer()"
+        title="Deshacer última acción"
+      >
+        ⏪ Deshacer
+      </button>
+      <button 
+        class="btn-magic btn-secondary" 
+        [disabled]="!puedeRehacer()" 
+        (click)="giratiempoRehacer()"
+        title="Rehacer acción revertida"
+      >
+        ⏩ Rehacer
+      </button>
+    </div>
+  </div>
+
+  <div class="caldero-workspace">
+    <!-- Columna Izquierda: Formulario de Preparación (Reto 3) -->
+    <div class="form-caldero-box">
+      <h3>🥣 Preparar Nueva Poción</h3>
+      <p class="form-desc">Ingresa las propiedades de la poción y añádela al caldero:</p>
+
+      <div class="form-group">
+        <label>Nombre de la Poción:</label>
+        <input 
+          type="text" 
+          class="input-magic" 
+          [(ngModel)]="nuevoNombre" 
+          placeholder="Ej: Poción Mágica de Fuerza"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Descripción / Efectos:</label>
+        <textarea 
+          class="input-magic text-area" 
+          [(ngModel)]="nuevaDescripcion" 
+          placeholder="Describe los efectos y precauciones..."
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Nivel de Peligro (1 a 10): {{ nuevoNivelPeligro }}</label>
+          <input 
+            type="range" 
+            min="1" 
+            max="10" 
+            class="input-range" 
+            [(ngModel)]="nuevoNivelPeligro" 
+          />
+        </div>
+
+        <div class="form-group half">
+          <label>Tiempo de Cocción (min):</label>
+          <input 
+            type="number" 
+            class="input-magic" 
+            [(ngModel)]="nuevoTiempoCoccion" 
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de Magia:</label>
+        <select class="input-magic" [(ngModel)]="nuevoTipoMagia">
+          <option value="Curacion">Curación (Verde restaurador)</option>
+          <option value="Transmutacion">Transmutación (Violeta alquímico)</option>
+          <option value="Luz">Luz y Protección (Azul celestial)</option>
+          <option value="Prohibida">Magia Oscura / Prohibida (Rojo peligro)</option>
+        </select>
+      </div>
+
+      <button 
+        class="btn-magic btn-submit btn-preparar" 
+        [disabled]="!esFormularioValido()" 
+        (click)="prepararPocion()"
+      >
+        ✨ Mezclar en el Caldero
+      </button>
+    </div>
+
+    <!-- Columna Derecha: Filtros (Reto 5) y Listado de Pociones (Reto 2) -->
+    <div class="lista-caldero-box">
+      <div class="filtros-bar">
+        <input 
+          type="text" 
+          class="input-magic input-search" 
+          [(ngModel)]="filtroTexto" 
+          placeholder="🔍 Buscar poción por nombre o efecto..."
+        />
+
+        <select class="input-magic select-tipo" [(ngModel)]="filtroTipoMagia">
+          <option value="TODAS">Todas las magias</option>
+          <option value="Curacion">Curación</option>
+          <option value="Transmutacion">Transmutación</option>
+          <option value="Luz">Luz</option>
+          <option value="Prohibida">Prohibida</option>
+        </select>
+
+        <label class="checkbox-peligro">
+          <input type="checkbox" [(ngModel)]="filtroSoloPeligrosas" />
+          <span>Peligro Mayor a 7</span>
+        </label>
+
+        <button class="btn-magic btn-secondary btn-sort" (click)="ordenAscendente = !ordenAscendente">
+          {{ ordenAscendente ? 'Peligro ↑' : 'Peligro ↓' }}
+        </button>
+      </div>
+
+      <!-- Grid de Pociones (Reto 2) -->
+      <div class="pociones-grid">
+        @for (pocion of getPocionesFiltradas(); track pocion.id) {
+          <div 
+            class="pocion-card" 
+            [ngClass]="'borde-magia-' + pocion.tipoMagia.toLowerCase()"
+          >
+            <div class="pocion-top">
+              <span class="frasco-icon">
+                @if (pocion.tipoMagia === 'Curacion') { 🧪 }
+                @if (pocion.tipoMagia === 'Transmutacion') { 🔮 }
+                @if (pocion.tipoMagia === 'Luz') { 🌟 }
+                @if (pocion.tipoMagia === 'Prohibida') { 💀 }
+              </span>
+              <div>
+                <h4 class="pocion-nombre">{{ pocion.nombre }}</h4>
+                <span class="badge-magic" [ngClass]="'badge-' + pocion.tipoMagia.toLowerCase()">
+                  {{ pocion.tipoMagia }}
+                </span>
+              </div>
+              <button 
+                class="btn-eliminar-pocion" 
+                (click)="eliminarPocion(pocion.id)"
+                title="Desechar poción"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p class="pocion-desc">{{ pocion.descripcion }}</p>
+
+            <!-- Alerta de Toxicidad Condicional (@if) -->
+            @if (pocion.nivelPeligro > 7) {
+              <div class="toxic-warning">
+                ⚠️ <strong>¡ALERTA DE TOXICIDAD!</strong> Peligro nivel {{ pocion.nivelPeligro }}/10. Requiere supervisión de un profesor.
+              </div>
+            }
+
+            <div class="pocion-footer">
+              <span>⏱️ Cocción: <strong>{{ pocion.tiempoCoccionMinutos }} min</strong></span>
+              <span>Peligro: <strong>{{ pocion.nivelPeligro }}/10</strong></span>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-caldero">
+            <span class="empty-icon">🥣 ✨</span>
+            <h4>El Caldero está esperando tus ingredientes</h4>
+            <p>
+              El caldero arranca vacío para que pongas en práctica los retos.
+            </p>
+            <div class="empty-instructions">
+              <p>👉 <strong>Paso 1:</strong> Abre <code>src/app/components/retos/caldero/caldero.component.ts</code> y resuelve el <strong>Reto 1</strong> en <code>ngOnInit()</code> para poblar las 3 pociones ancestrales.</p>
+              <p>👉 <strong>Paso 2:</strong> Ejecuta <code>npm test</code> en tu consola para que el Tribunal de Magia valide tus 42 encantamientos paso a paso.</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+</div>

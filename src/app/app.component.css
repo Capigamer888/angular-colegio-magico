@@ -1,0 +1,18 @@
+main {
+  min-height: calc(100vh - 140px);
+}
+
+.footer-magic {
+  border-top: 1px solid var(--border-gold);
+  background: rgba(8, 11, 17, 0.95);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}

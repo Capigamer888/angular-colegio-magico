@@ -1,0 +1,134 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a routerLink="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Laboratorio 03</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge">SECCIÓN 3</div>
+    <h2>🪄 Encantamientos de Vista: Directivas Modernas ({{ '@if' }}, {{ '@for' }}, [ngClass])</h2>
+    <p class="section-subtitle">
+      Las directivas son los conjuros que transforman la estructura del DOM y visten a los elementos con auras de estilo.
+    </p>
+  </div>
+
+  <div class="callout-didactico">
+    <h4>📜 Evolución de las Directivas en Angular (Pregunta de Entrevista Técnica)</h4>
+    <p>
+      • <strong>AngularJS (1.x Legacy):</strong> Se usaba <span class="callout-code">ng-if</span> y <span class="callout-code">ng-repeat</span>.<br>
+      • <strong>Angular (v2 a v16):</strong> Se usaban directivas con asterisco: <span class="callout-code">*ngIf</span> y <span class="callout-code">*ngFor</span>.<br>
+      • <strong>Angular Moderno (v17+):</strong> Se introdujo el <strong>Built-in Control Flow</strong> con arroba: <span class="callout-code">{{ '@if' }}</span> y <span class="callout-code">{{ '@for' }}</span>. Es más rápido, no necesita importar CommonModule para directivas básicas y se lee como JavaScript nativo.
+    </p>
+  </div>
+
+  <div class="directivas-grid">
+    <!-- Demo 1: @if Hechizo Desilusionador -->
+    <div class="demo-box">
+      <div class="box-header">
+        <h3>1. Directiva Condicional ({{ '@if' }} / {{ '@else' }})</h3>
+        <span class="box-tag">Estructural</span>
+      </div>
+      <p class="box-desc">El mago Harry Potter se pone la capa de invisibilidad. El nodo es removido del DOM, no solo oculto:</p>
+
+      <button class="btn-magic" (click)="toggleInvisibilidad()">
+        @if (tieneCapaInvisibilidad) {
+          <span>✨ Quitarse la Capa de Invisibilidad</span>
+        } @else {
+          <span>🧥 Ponerse la Capa de Invisibilidad</span>
+        }
+      </button>
+
+      <div class="stage-area">
+        @if (!tieneCapaInvisibilidad) {
+          <div class="mago-visible">
+            <span class="mago-emoji">🧙‍♂️</span>
+            <div class="mago-datos">
+              <h4>Harry Potter</h4>
+              <p>Totalmente visible en los pasillos de Hogwarts.</p>
+              <span class="badge-magic">{{ '@if' }} (true) -> Nodo en el DOM</span>
+            </div>
+          </div>
+        } @else {
+          <div class="mago-invisible">
+            <span class="invisible-emoji">🌫️ ✨</span>
+            <p><strong>¡Desilusionado!</strong> El elemento ha desaparecido completamente del DOM.</p>
+            <span class="badge-magic badge-prohibida">{{ '@else' }} -> Nodo eliminado</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Demo 2: @for Hechizo Geminio -->
+    <div class="demo-box">
+      <div class="box-header">
+        <h3>2. Iteración ({{ '@for' }} con track)</h3>
+        <span class="box-tag">Estructural</span>
+      </div>
+      <p class="box-desc">Hechizo Geminio: multiplica la colección de Ranas de Chocolate con cromos mágicos:</p>
+
+      <div class="action-bar">
+        <button class="btn-magic" (click)="clonarRana()">🐸 Lanzar Geminio (+1 Rana)</button>
+        <span class="items-count">Total: <strong>{{ ranas.length }}</strong></span>
+      </div>
+
+      <div class="ranas-list">
+        @for (rana of ranas; track rana.id) {
+          <div class="rana-card">
+            <div class="rana-main">
+              <span class="rana-icon">🐸</span>
+              <div>
+                <strong>{{ rana.nombreCromo }}</strong>
+                <span class="rareza-tag" [class.legendaria]="rana.rareza === 'Legendaria'">{{ rana.rareza }}</span>
+              </div>
+            </div>
+            <button class="btn-comer" title="Comer rana" (click)="comerRana(rana.id)">🍴 Comer</button>
+          </div>
+        } @empty {
+          <div class="empty-ranas">
+            <p>🍬 ¡No quedan ranas de chocolate! Usa Geminio para clonar más.</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Demo 3: [ngClass] y [ngStyle] Sombrero Seleccionador de Túnicas -->
+    <div class="demo-box full-col">
+      <div class="box-header">
+        <h3>3. Directivas de Atributo ([ngClass] y [ngStyle])</h3>
+        <span class="box-tag">Atributo</span>
+      </div>
+      <p class="box-desc">
+        Cambian la apariencia o estilo dinámicamente según variables de TypeScript sin alterar la estructura del DOM:
+      </p>
+
+      <div class="casas-selector">
+        <label>Elige la Casa de Magia:</label>
+        <div class="btn-casas">
+          <button class="btn-casa gryffindor" [class.activa]="casaSeleccionada === 'Gryffindor'" (click)="seleccionarCasa('Gryffindor')">🦁 Gryffindor</button>
+          <button class="btn-casa slytherin" [class.activa]="casaSeleccionada === 'Slytherin'" (click)="seleccionarCasa('Slytherin')">🐍 Slytherin</button>
+          <button class="btn-casa ravenclaw" [class.activa]="casaSeleccionada === 'Ravenclaw'" (click)="seleccionarCasa('Ravenclaw')">🦅 Ravenclaw</button>
+          <button class="btn-casa hufflepuff" [class.activa]="casaSeleccionada === 'Hufflepuff'" (click)="seleccionarCasa('Hufflepuff')">🦡 Hufflepuff</button>
+        </div>
+      </div>
+
+      <!-- Preview dinámico con [ngClass] -->
+      <div class="tunica-preview" [ngClass]="'casa-' + casaSeleccionada.toLowerCase()">
+        <div class="tunica-badge">
+          <span class="tunica-icon">
+            @if (casaSeleccionada === 'Gryffindor') { 🦁 }
+            @if (casaSeleccionada === 'Slytherin') { 🐍 }
+            @if (casaSeleccionada === 'Ravenclaw') { 🦅 }
+            @if (casaSeleccionada === 'Hufflepuff') { 🦡 }
+          </span>
+          <div>
+            <h4>Túnica Sagrada de {{ casaSeleccionada }}</h4>
+            <p>Clase CSS aplicada: <span class="callout-code">[ngClass]="'casa-{{ casaSeleccionada.toLowerCase() }}'"</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>

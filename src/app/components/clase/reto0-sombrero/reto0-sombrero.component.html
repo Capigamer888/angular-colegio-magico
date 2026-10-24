@@ -1,0 +1,147 @@
+<div class="page-container">
+  <div class="page-breadcrumb">
+    <a routerLink="/" class="back-link">← Volver al Gran Comedor</a>
+    <span class="sep">•</span>
+    <span class="current">Reto 0 • Clase en Vivo</span>
+  </div>
+
+  <section class="section-card card-magic">
+  <div class="section-header">
+    <div class="section-badge teacher-badge">RETO 0 • CLASE CON EL PROFESOR</div>
+    <h2>🎓 La Masterclass: El Sombrero Seleccionador y el Mago</h2>
+    <p class="section-subtitle">
+      Demostración integral en vivo: modelos de datos, ciclos de vida (ngOnInit / ngOnDestroy), directivas de control flow ({{ '@if' }} / {{ '@for' }}) y Two-Way Data Binding ([(ngModel)]).
+    </p>
+  </div>
+
+  <div class="callout-didactico">
+    <h4>🧙‍♂️ Guion para el Profesor</h4>
+    <p>
+      Este componente reúne <strong>todos</strong> los conceptos que los alumnos necesitarán en los Retos 1 al 6. 
+      Muestra cómo se enlaza el formulario con <span class="callout-code">[(ngModel)]</span>, cómo reacciona la túnica con <span class="callout-code">[ngClass]</span>, 
+      cómo se itera la lista de hechizos con <span class="callout-code">{{ '@for' }}</span> y cómo se protege el botón con <span class="callout-code">[disabled]</span>.
+    </p>
+  </div>
+
+  <div class="view-toggle-bar">
+    <button class="btn-magic btn-secondary" (click)="toggleCodigo()">
+      @if (verCodigoFuente) {
+        <span>👁️ Ver Interfaz Mágica</span>
+      } @else {
+        <span>💻 Ver Código Fuente del Reto 0</span>
+      }
+    </button>
+  </div>
+
+  @if (verCodigoFuente) {
+    <!-- Vista de Código para Proyectar en Clase -->
+    <div class="code-view-box">
+      <h3>📜 Código TypeScript de Referencia (src/app/components/clase/reto0-sombrero.ts)</h3>
+      <pre class="code-block"><code>{{ codigoEjemploTS }}</code></pre>
+    </div>
+  } @else {
+    <!-- Vista Interactiva en Vivo -->
+    <div class="sombrero-grid">
+      <!-- Columna 1: Panel del Sombrero Seleccionador -->
+      <div class="panel-box">
+        <div class="sombrero-header">
+          <span class="sombrero-avatar" [class.meditando]="estaMeditando">🧙‍♂️ 🎩</span>
+          <div>
+            <h3>El Sombrero Seleccionador</h3>
+            <p class="sombrero-quote">"Ponme sobre tu cabeza y te diré a qué casa perteneces..."</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre del Aprendiz a Probar:</label>
+          <input 
+            type="text" 
+            class="input-magic" 
+            [(ngModel)]="nombreInput" 
+            placeholder="Escribe el nombre del aspirante..."
+          />
+          <span class="binding-hint">[(ngModel)]="nombreInput"</span>
+        </div>
+
+        <div class="deliberar-actions">
+          <button 
+            class="btn-magic" 
+            [disabled]="!nombreInput" 
+            (click)="deliberarCasa()"
+          >
+            <span>🎩 ¡Colocar el Sombrero Seleccionador! (Aleatorio)</span>
+          </button>
+
+          <div class="quick-houses-picker">
+            <span class="picker-label">Demostración en Vivo para el Profesor:</span>
+            <div class="picker-buttons">
+              <button type="button" class="btn-house-tag tag-gryffindor" (click)="deliberarCasa('Gryffindor')">🦁 Gryffindor</button>
+              <button type="button" class="btn-house-tag tag-slytherin" (click)="deliberarCasa('Slytherin')">🐍 Slytherin</button>
+              <button type="button" class="btn-house-tag tag-ravenclaw" (click)="deliberarCasa('Ravenclaw')">🦅 Ravenclaw</button>
+              <button type="button" class="btn-house-tag tag-hufflepuff" (click)="deliberarCasa('Hufflepuff')">🦡 Hufflepuff</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="veredicto-box">
+          <div class="veredicto-title">Veredicto del Sombrero:</div>
+          <p class="veredicto-text">{{ mensajeSombrero }}</p>
+        </div>
+      </div>
+
+      <!-- Columna 2: Ficha del Mago y Hechizos Aprendidos -->
+      <div class="panel-box" [ngClass]="'tunica-' + magoActual.casa.toLowerCase()">
+        <div class="mago-top">
+          <div class="mago-meta">
+            <span class="casa-shield">
+              @if (magoActual.casa === 'Gryffindor') { 🦁 }
+              @if (magoActual.casa === 'Slytherin') { 🐍 }
+              @if (magoActual.casa === 'Ravenclaw') { 🦅 }
+              @if (magoActual.casa === 'Hufflepuff') { 🦡 }
+            </span>
+            <div>
+              <h3>{{ nombreInput || 'Aspirante sin Nombre' }}</h3>
+              <span class="badge-magic">Casa: {{ magoActual.casa }}</span>
+            </div>
+          </div>
+          <div class="mago-power">
+            <span>Poder: {{ magoActual.nivelMagia }}%</span>
+          </div>
+        </div>
+
+        <div class="varita-info">
+          <strong>Varita:</strong> {{ magoActual.varita }}
+        </div>
+
+        <!-- Lista de Hechizos con @for -->
+        <div class="hechizos-section">
+          <h4>🪄 Grimorio de Hechizos ({{ '@for' }} con track):</h4>
+          <div class="hechizos-chips">
+            @for (h of magoActual.hechizosConocidos; track $index) {
+              <span class="chip-hechizo">
+                {{ h }}
+                <button class="btn-olvidar" title="Olvidar hechizo" (click)="olvidarHechizo($index)">✕</button>
+              </span>
+            } @empty {
+              <p class="no-hechizos">El mago aún no ha aprendido ningún hechizo.</p>
+            }
+          </div>
+
+          <div class="add-hechizo-form">
+            <input 
+              type="text" 
+              class="input-magic" 
+              [(ngModel)]="nuevoHechizo" 
+              placeholder="Ej: Alohomora, Wingardium Leviosa..."
+              (keyup.enter)="aprenderHechizo()"
+            />
+            <button class="btn-magic" [disabled]="!nuevoHechizo.trim()" (click)="aprenderHechizo()">
+              + Aprender
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</section>
+</div>

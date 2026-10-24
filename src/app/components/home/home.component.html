@@ -1,0 +1,187 @@
+<div class="home-wrapper">
+  <!-- HERO MINIMALISTA -->
+  <header class="hero-section">
+    <div class="hero-badge">🏰 COLEGIO MÁGICO DE HOGWARTS</div>
+    <h1 class="hero-title">Academia Frontend con Angular</h1>
+    <p class="hero-lead">
+      Plataforma didáctica para aprender los fundamentos de Angular moderno. 
+      Explora cada sección individualmente para estudiar y repasar a tu propio ritmo.
+    </p>
+  </header>
+
+  <!-- 1. CLASE EN VIVO DEL PROFESOR (RETO 0) -->
+  <section class="section-group">
+    <div class="group-header">
+      <span class="group-tag teacher-tag">EN VIVO CON EL PROFESOR</span>
+      <h2>🎓 Reto 0: La Masterclass de Código en Directo</h2>
+      <p>El profesor construirá en vivo un componente completo que reúne todos los conceptos de la clase.</p>
+    </div>
+
+    <div class="featured-card card-magic">
+      <div class="featured-content">
+        <span class="featured-avatar">🧙‍♂️ 🎩</span>
+        <div>
+          <h3>El Sombrero Seleccionador y el Mago</h3>
+          <p>
+            Construcción paso a paso: creación de modelos TypeScript, Two-Way Data Binding (<span class="callout-code">[(ngModel)]</span>), 
+            ciclos de vida (<span class="callout-code">ngOnInit</span> / <span class="callout-code">ngOnDestroy</span>) y directivas de control flow.
+          </p>
+          <div class="featured-meta">
+            <span class="badge-magic badge-teacher">Código en Directo</span>
+            <span class="file-path">📁 src/app/components/clase/reto0-sombrero/</span>
+          </div>
+        </div>
+      </div>
+      <a routerLink="/reto-0" class="btn-magic btn-enter">
+        Entrar a la Masterclass →
+      </a>
+    </div>
+  </section>
+
+  <!-- 2. LABORATORIOS DE REPASO (SECCIONES INDIVIDUALES 1 A 4) -->
+  <section class="section-group">
+    <div class="group-header">
+      <span class="group-tag study-tag">ESTUDIO Y REPASO</span>
+      <h2>📖 Laboratorios Interactivos de Clase</h2>
+      <p>Cada sección tiene su propia página dedicada para que estudies y veas la ejecución visual sin distracciones:</p>
+    </div>
+
+    <div class="study-grid">
+      @for (sec of seccionesEstudio; track sec.numero) {
+        <div class="study-card card-magic">
+          <div class="study-top">
+            <span class="study-num">{{ sec.numero }}</span>
+            <span class="study-icon">{{ sec.icono }}</span>
+          </div>
+          <h3 class="study-title">{{ sec.titulo }}</h3>
+          <p class="study-desc">{{ sec.descripcion }}</p>
+          <div class="study-footer">
+            <span class="file-hint">📄 {{ sec.archivo }}</span>
+            <a [routerLink]="sec.ruta" class="study-link">
+              Ver Laboratorio →
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- 3. ZONA DE EVALUACIÓN DE LOS ESTUDIANTES -->
+  <section class="section-group">
+    <div class="group-header">
+      <span class="group-tag eval-tag">EVALUACIÓN Y ENTREGAS</span>
+      <h2>⚗️ Zona de Retos Autónomos</h2>
+      <p>Tu espacio de trabajo calificado. Resuelve los retos en el código y valida tus hechizos con el Tribunal:</p>
+    </div>
+
+    <div class="eval-grid">
+      <!-- Caldero (Retos 1 al 6) -->
+      <div class="eval-card card-magic student-card">
+        <div class="eval-top">
+          <span class="eval-icon">🥣 ✨</span>
+          <span class="badge-magic badge-student">50% CALIFICACIÓN</span>
+        </div>
+        <h3>Retos 1 al 6: El Caldero de Pociones</h3>
+        <p>
+          Implementa <span class="callout-code">ngOnInit</span>, filtros dinámicos en tiempo real, 
+          control flow, limpieza en <span class="callout-code">ngOnDestroy</span> y el Giratiempo con historial Undo/Redo.
+        </p>
+        <div class="eval-footer">
+          <span class="file-hint">📁 components/retos/caldero/</span>
+          <a routerLink="/caldero" class="btn-magic btn-student">
+            Abrir Caldero →
+          </a>
+        </div>
+      </div>
+
+      <!-- Reto Creativo (Reto 7) -->
+      <div class="eval-card card-magic creative-card">
+        <div class="eval-top">
+          <span class="eval-icon">🎨 ⚔️</span>
+          <span class="badge-magic badge-creative">30% CALIFICACIÓN</span>
+        </div>
+        <h3>Reto 7: El Lienzo Creativo</h3>
+        <p>
+          Libertad para crear un artefacto mágico interactivo (ej: Simulador de Duelos, Mapa del Merodeador o Generador de Varitas) 
+          demostrando dominio técnico y diseño visual.
+        </p>
+        <div class="eval-footer">
+          <span class="file-hint">📁 components/retos/artefacto-creativo/</span>
+          <a routerLink="/artefacto-creativo" class="btn-magic btn-creative">
+            Ver Lienzo Creativo →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. REGLAS DE ORO Y PONDERACIÓN -->
+  <section class="rules-summary-section">
+    <div class="rules-summary-card card-magic">
+      <div class="rules-summary-header" (click)="toggleEvaluacion()">
+        <div class="rules-title-box">
+          <span class="rules-badge-icon">⚖️</span>
+          <div>
+            <h3>Reglas de Oro del Tribunal y Ponderación de la Nota</h3>
+            <span class="rules-subtext">Calificación de 0.0 automática en caso de faltas graves • Haz clic para {{ verDetalleEvaluacion ? 'ocultar' : 'ver detalles' }}</span>
+          </div>
+        </div>
+        <button class="btn-toggle-info">
+          {{ verDetalleEvaluacion ? '▲ Menos información' : '▼ Ver criterios' }}
+        </button>
+      </div>
+
+      @if (verDetalleEvaluacion) {
+        <div class="rules-details-expanded">
+          <!-- Alertas de Cero -->
+          <div class="zero-alerts-grid">
+            <div class="zero-alert-box">
+              <h4>☠️ 1. Maldición del Manipulador de Tests (Nota: 0.0)</h4>
+              <p>
+                Prohibido modificar los archivos <span class="callout-code">*.spec.ts</span>. 
+                Si el Tribunal detecta alteraciones en las pruebas, la calificación será de 0.0 inmediata sin revisión.
+              </p>
+            </div>
+            <div class="zero-alert-box">
+              <h4>🚪 2. El Sello del Pull Request (Nota: 0.0)</h4>
+              <p>
+                El trabajo entregado sin un <strong>Pull Request formal</strong> abierto hacia la rama principal del repositorio original se califica con 0.0.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tabla de Ponderación -->
+          <div class="rubric-table-box">
+            <h4>📊 Distribución de la Calificación (0.0 a 5.0):</h4>
+            <div class="rubric-rows">
+              <div class="rubric-row">
+                <span class="pct tech-color">50%</span>
+                <div class="desc">
+                  <strong>Retos Técnicos (1 al 6):</strong> Pruebas unitarias aprobadas, código limpio y manejo adecuado del DOM.
+                </div>
+              </div>
+              <div class="rubric-row">
+                <span class="pct ia-color">20%</span>
+                <div class="desc">
+                  <strong>Bitácora de IA en el PR:</strong> Informe honesto redactado con tus propias palabras sobre cómo usaste la IA en los Retos 5 y 6.
+                </div>
+              </div>
+              <div class="rubric-row">
+                <span class="pct art-color">30%</span>
+                <div class="desc">
+                  <strong>El Lienzo Creativo (Reto 7):</strong> Originalidad, interactividad, estética visual y dominio de Angular.
+                </div>
+              </div>
+            </div>
+            <p class="rubric-notice">
+              🤖 <strong>Evaluación Automática por Issues:</strong> El Tribunal de GitHub Actions te abrirá un Issue por cada reto. Cada fallo en <code>git push</code> descuenta 2 puntos. Si fallas 3 o más veces, recibirás una pista técnica en el Issue para darte luz. Al superar cada reto, se cerrará y se abrirá el siguiente.
+            </p>
+            <p class="rubric-notice">
+              *Nota: Aprobar el 100% de los tests del Tribunal es indispensable, pero no garantiza el 5.0 automático sin la revisión técnica del profesor.
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</div>

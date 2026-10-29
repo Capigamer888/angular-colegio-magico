@@ -16,7 +16,6 @@ export class CalderoComponent implements OnInit, OnDestroy {
   // =========================================================================
   // El arreglo arranca vacío. Debes inicializarlo en ngOnInit()
   pociones: Pocion[] = [];
-
   // =========================================================================
   // 🪞 RETO 3: EL VÍNCULO CON EL CALDERO (Variables para [(ngModel)])
   // =========================================================================
@@ -52,7 +51,16 @@ export class CalderoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Inicia el fuego del caldero (utilizado en el Reto 4)
     this.iniciarFuegoCaldero();
-
+    this.pociones = ["Poción Multijugos", "Felix Felicis", "Filtro de Muertos"].map((nombre, index) => ({
+      id: Date.now() + index,
+      nombre,
+      descripcion: `Descripción de ${nombre}`,
+      nivelPeligro: nombre === "Poción Multijugos" ? 8 : nombre === "Felix Felicis" ? 3 : 10,
+      tiempoCoccionMinutos: nombre === "Poción Multijugos" ? 45 : nombre === "Felix Felicis" ? 120 : 90,
+      tipoMagia: nombre === "Poción Multijugos" ? 'Transmutacion' : nombre === "Felix Felicis" ? 'Curacion' : 'Prohibida',
+      ingredientes: [],
+      estable: true
+    }));
     // =======================================================================
     // TODO: Reto 1 - En ngOnInit(), inicializa 'this.pociones' con al menos 3 pociones:
     // 1. "Poción Multijugos" (peligro: 8, tiempo: 45, tipo: 'Transmutacion')

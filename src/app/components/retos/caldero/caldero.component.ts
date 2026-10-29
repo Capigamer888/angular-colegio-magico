@@ -154,7 +154,27 @@ export class CalderoComponent implements OnInit, OnDestroy {
   // =========================================================================
   getPocionesFiltradas(): Pocion[] {
     // TODO: Reto 5 - Reemplaza este retorno simple por el algoritmo completo
-    return this.pociones;
+    let resultado = [...this.pociones];
+    // Filtro de texto
+    if (this.filtroTexto.trim() !== '') {
+      const texto = this.filtroTexto.trim().toLowerCase();
+      resultado = resultado.filter(p => 
+        p.nombre.toLowerCase().includes(texto) || 
+        p.descripcion.toLowerCase().includes(texto)
+      );
+    }
+    // Filtro de tipo de magia
+    if (this.filtroTipoMagia !== 'TODAS') {
+      resultado = resultado.filter(p => p.tipoMagia === this.filtroTipoMagia);
+    }
+    // Filtro de peligrosas
+    if (this.filtroSoloPeligrosas) {
+      resultado = resultado.filter(p => p.nivelPeligro > 7);
+    }
+    // Ordenamiento
+    resultado.sort((a, b) => this.ordenAscendente ? a.nivelPeligro - b.nivelPeligro : b.nivelPeligro - a.nivelPeligro);
+    return resultado;
+
   }
 
   // =========================================================================
@@ -165,6 +185,9 @@ export class CalderoComponent implements OnInit, OnDestroy {
   // =========================================================================
   calcularEstabilidadCaldero(): 'SEGURO' | 'INESTABLE' | 'CRÍTICO' {
     // TODO: Reto 5 - Reemplaza este retorno por tu lógica de cálculo
+    const criticas = this.pociones.filter(p => p.nivelPeligro >= 8).length;
+    if (criticas >= 2) return 'CRÍTICO';
+    if (this.pociones.some(p => p.nivelPeligro >= 5)) return 'INESTABLE';
     return 'SEGURO';
   }
 

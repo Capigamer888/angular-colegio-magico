@@ -206,23 +206,42 @@ export class CalderoComponent implements OnInit, OnDestroy {
   // =========================================================================
   guardarEstadoGiratiempo(): void {
     // TODO: Reto 6 - Implementar guardado inmutable en el historial
+    // Si se hizo undo y se agrega una acción, descarta el futuro
+    if (this.indiceHistorial < this.historialPasos.length - 1) {
+      this.historialPasos = this.historialPasos.slice(0, this.indiceHistorial + 1);
+    }
+    // Clonar profundamente el estado actual de pociones
+    const estadoClonado = this.pociones.map(p => ({ ...p, ingredientes: [...p.ingredientes] }));
+    this.historialPasos.push(estadoClonado);
+    this.indiceHistorial++;
+    
   }
 
   puedeDeshacer(): boolean {
     // TODO: Reto 6 - Retornar si es posible retroceder
-    return false;
+    return this.indiceHistorial > 0;
   }
 
   puedeRehacer(): boolean {
     // TODO: Reto 6 - Retornar si es posible avanzar
-    return false;
+    return this.indiceHistorial < this.historialPasos.length - 1;
   }
 
   giratiempoDeshacer(): void {
     // TODO: Reto 6 - Revertir al estado anterior
+    if (this.puedeDeshacer()) {
+      this.indiceHistorial--;
+      const estadoAnterior = this.historialPasos[this.indiceHistorial];
+      this.pociones = estadoAnterior.map(p => ({ ...p, ingredientes: [...p.ingredientes] }));
+    }
   }
 
   giratiempoRehacer(): void {
     // TODO: Reto 6 - Avanzar al estado siguiente
+    if (this.puedeRehacer()) {
+      this.indiceHistorial++;
+      const estadoSiguiente = this.historialPasos[this.indiceHistorial];
+      this.pociones = estadoSiguiente.map(p => ({ ...p, ingredientes: [...p.ingredientes] }));
+    }
   }
 }
